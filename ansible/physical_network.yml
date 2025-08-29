@@ -29,6 +29,9 @@
     {{ tenks_ip_path }} -details link show {{ source_interface }}
   register: if_details
   changed_when: false
+  # NOTE: something is wrong with iproute2 @ Ubuntu 24.04 (Kernel 6.14.0) at the moment
+  # [ 2638.312765] ip[9357]: segfault at 66474e551 ip 000059e35dd06388 sp 00007fff38f8d910 error 4 in ip[47388,59e35dccd000+83000] likely on CPU 0 (core 0, socket 0)
+  ignore_errors: true
 
 - name: Register source interface as a Linux bridge
   set_fact:
